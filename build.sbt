@@ -69,7 +69,16 @@ scalacOptions in (Test, doc) ++= Seq("-groups", "-implicits")
 fork in Test := true
 
 // This and the next line fix a problem with forked run: https://github.com/scalatest/scalatest/issues/770
-javaOptions in Test ++= Seq("-Xmx2048m", "-XX:ReservedCodeCacheSize=384m", "-XX:MaxPermSize=384m")
+javaOptions in Test ++= Seq(
+    "-Xmx2048m", "-XX:ReservedCodeCacheSize=384m", "-XX:MaxMetaspaceSize=384m",
+    "--add-opens=java.base/java.lang=ALL-UNNAMED", "--add-opens=java.base/java.lang.invoke=ALL-UNNAMED",
+    "--add-opens=java.base/java.lang.reflect=ALL-UNNAMED",  "--add-opens=java.base/java.io=ALL-UNNAMED",
+    "--add-opens=java.base/java.net=ALL-UNNAMED", "--add-opens=java.base/java.nio=ALL-UNNAMED",
+    "--add-opens=java.base/java.util=ALL-UNNAMED", "--add-opens=java.base/java.util.concurrent=ALL-UNNAMED",
+    "--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED", "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED", 
+    "--add-opens=java.base/sun.nio.cs=ALL-UNNAMED", "--add-opens=java.base/sun.security.action=ALL-UNNAMED",
+    "--add-opens=java.base/sun.util.calendar=ALL-UNNAMED", "--add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED"
+)
 
 concurrentRestrictions in Global := Seq(
   Tags.limitAll(1))
